@@ -1,13 +1,16 @@
-body{
-    margin-top:20px;
-    background:#eee;    
+body {
+    margin-top: 20px;
+    background: #eee;
 }
+
 a {
     color: #f96332;
 }
-.m-t-5{
-    margin-top: 5px;   
+
+.m-t-5 {
+    margin-top: 5px;
 }
+
 .card {
     background: #fff;
     margin-bottom: 30px;
@@ -19,12 +22,14 @@ a {
     width: 100%;
     box-shadow: none;
 }
+
 .card .body {
     font-size: 14px;
     color: #424242;
     padding: 20px;
     font-weight: 400;
 }
+
 .profile-page .profile-header {
     position: relative
 }
