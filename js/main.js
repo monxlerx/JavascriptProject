@@ -49,42 +49,23 @@ function getUser(id) {
             if (user._id === id) {
                 usercontent.innerHTML += `
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <p>${user.name}</p>
-      <p>${user.city}</p>
-      <p>${user.color}</p>
-      <p>${user._id}</p>
-      <p>${user.age}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+                <div class="card" style="width: 22rem;">
+                     <div class="card-body">
+                        <h5 class="card-title">Name: ${user.name}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">User ID: ${user._id}</h6>
+                        <p class="card-text">City: ${user.city}</p>
+                        <p class="card-text">Color: ${user.color}</p>
+                        <p class="card-text">Age: ${user.age}</p>
+                     </div>
+                </div>
             
-            
-
             `
             }
         }
     }
-
-    //Mostrar una tabla con los valores de Nombre y Ciudad. Estos dos criterios serán los que se utilizarán para hacer el sorting.
-
 }
 
-//Create a GitHub user
+//Create a GitHub user through form
 var usercontent = document.querySelector('#usercontent')
 
 function addUser(user) {
