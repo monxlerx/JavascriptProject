@@ -2,65 +2,90 @@
 //API
 const URL = 'https://raw.githubusercontent.com/ITBconsult/json-data/master/data.json';
 
-// create an element
-const createNode = (elem) => {
-    return document.createElement(elem);
-};
-
-// append an element to parent
-const appendNode = (parent, elem) => {
-    parent.appendChild(elem);
-}
-
 //Get all users from the API
-
-// List Element
-const ul = document.querySelector('#users');
-
-// make the API call
-fetch(URL)
-    .then(res => res.json())
-    .then(data => {
-        // iterate over users
-        data.map((user) => {
-            // create the elements
-            let li = createNode('li'),
-                p1 = createNode('p'),
-                p2 = createNode('p');
-            p1.innerText = user.name;
-            p2.innerText = user.city;
-            // append all elements
-            appendNode(li, p1);
-            appendNode(li, p2);
-            appendNode(ul, li);
-        });
-    }).catch(err => {
-        console.error('Error: ', err);
-    });
-
-
-
-
-
-
+var content = document.querySelector('#content')
 
 function retrieveUsers() {
-    fetch(`https://raw.githubusercontent.com/ITBconsult/json-data/master/data.json`)
-        .then(function (response) {
-            return response.text();
+    fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+            printTable(data)
         })
-        .then(function (data) {
-            console.log('data = ', data);
-        })
-        .catch(function (err) {
-            console.error(err);
-        });
 }
 
-window.addEventListener('DOMContentLoaded', retrieveUsers, false);
+function printTable(data) {
+    console.log(data);
+    let index = 1;
+    content.innerHTML = ''
 
+    for (let value of data) {
+        content.innerHTML += `
+                
+                <tr>
+                    <th scope="row">${index}</th>
+                    <td>${value.name}</td>
+                    <td>${value.city}</td>
+                    <td><button class="btn btn-light" data-toggle="modal" data-target="#exampleModal" onclick="getUser('${value._id}')"><i class="fab fa-github"></i> View Detail</button></td>
+                </tr>
+                
+                `
+        index++;
+    }
+}
+
+//Show a specific user when 'View Detail' button is clicked
+function getUser(id) {
+    fetch(URL)
+        .then(res => res.json())
+        .then(dataUsers => {
+            printUser(dataUsers, id)
+        })
+
+    function printUser(dataUsers, id) {
+        console.log(dataUsers)
+        console.log(id);
+        usercontent.innerHTML = ''
+        for (let user of dataUsers) {
+            if (user._id === id) {
+                usercontent.innerHTML += `
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <p>${user.name}</p>
+      <p>${user.city}</p>
+      <p>${user.color}</p>
+      <p>${user._id}</p>
+      <p>${user.age}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+            
+            
+
+            `
+            }
+        }
+    }
+
+    //Mostrar una tabla con los valores de Nombre y Ciudad. Estos dos criterios serán los que se utilizarán para hacer el sorting.
+
+}
 
 //Create a GitHub user
+var usercontent = document.querySelector('#usercontent')
 
 function addUser(user) {
     fetch('https://raw.githubusercontent.com/ITBconsult/json-data/master/data.json', {
@@ -81,14 +106,7 @@ function addUser(user) {
         .then(res => console.log(res));
 }
 
-function getUser (id) {
-
-    //En cada uno de las tarjetas, incluimos un botón de mostrar detalle, dónde aparecen el resto de datos del usuario
-    //Mostrar una tabla con los valores de Nombre y Ciudad. Estos dos criterios serán los que se utilizarán para hacer el sorting.
-
-}
-
-function generateId () {
+function generateId() {
     //Existe una parte fija dentro del Id y otra que es generada de forma "random"
 }
 
