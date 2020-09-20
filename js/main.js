@@ -17,11 +17,10 @@ function printTable(data) {
     console.log(data);
     let index = 1;
     content.innerHTML = ''
-
     for (let value of data) {
         content.innerHTML += `
                 
-                <tr>
+                <tr onmouseover="changeBackgroundColor(this)" onmouseout="restoreBackgroundColor(this)">
                     <th scope="row">${index}</th>
                     <td>${value.name}</td>
                     <td>${value.city}</td>
@@ -66,29 +65,64 @@ function getUser(id) {
 }
 
 //Create a GitHub user through form
-var usercontent = document.querySelector('#usercontent')
-
-function addUser(user) {
-    fetch('https://raw.githubusercontent.com/ITBconsult/json-data/master/data.json', {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-            {
-                name: "Noel",
-                city: "Iniguez",
-                color: "DimGray",
-                age: 20,
-                _mock: true
-            })
-    }).then(res => res.json())
-        .then(res => console.log(res));
+let btnAddUser = document.getElementById("btnAddUser");
+if(btnAddUser) {
+    btnAddUser.addEventListener('click', addUser, false);
 }
 
+function addUser() {
+
+    let user = {
+        _id: generateId(),
+        name: document.getElementById("inputName").value,
+        city: document.getElementById("inputCity").value,
+        age: document.getElementById("inputAge").value,
+        _mock: true
+    }
+
+    //alert(user._id + " " + user.name + " " + user.city + " " + user.age + " " + user._mock);
+    let message = document.getElementById("message");
+
+    fetch(URL, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            console.log('Success:', response);
+            message.innerHTML = `
+            
+            <div class="alert alert-success" role="alert">
+                 A new GitHub user has been created successfully.
+            </div>
+            
+            `
+        });
+}
+
+//Generate a unique ID when a user has been created
 function generateId() {
-    //Existe una parte fija dentro del Id y otra que es generada de forma "random"
+    let fixedPartId = "5bed5c1ab453c25f";
+    let randomCombination = (Math.random() * 0xfffff * 100000000).toString(16);
+    let variablePartId = randomCombination.slice(0, 8);
+    let uniqueId = fixedPartId + variablePartId;
+
+    return uniqueId;
+}
+
+//Highlight rows of the table
+let backgroundMouseOverColor = '#a9d8ef';
+let backgroundMouseOutColor = '#ffffff';
+
+function changeBackgroundColor(row) {
+    row.style.backgroundColor = backgroundMouseOverColor;
+}
+
+function restoreBackgroundColor(row) {
+    row.style.backgroundColor = backgroundMouseOutColor;
 }
 
 function sortByName() {
