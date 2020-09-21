@@ -20,11 +20,14 @@
                 <button type="button" class="btn btn-outline-primary float-right" h
                     id="user" onclick="location.href='portfolio/userform.html'">Create a new user</button>
             </div>
+            <div class="col-lg-12">
+                <input type="text" class="mb-3"id="myInput" onkeyup="searchUsers()" placeholder="Search for names.." title="Type in a name">
+            </div>
             <div class="col-lg-12" id="usercontent">
                 
             </div>
             <div class="col-lg-12 mt-3">
-                <table class="table text-center">
+                <table class="table text-center" id="myTable">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -37,6 +40,9 @@
 
                     </tbody>
                 </table>
+                <div id="pagination">
+                    
+                </div>
             </div>
             
 
